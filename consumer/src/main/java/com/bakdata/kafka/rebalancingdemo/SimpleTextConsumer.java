@@ -1,4 +1,4 @@
-package de.bakdata.rebalancingdemo;
+package com.bakdata.kafka.rebalancingdemo;
 
 import com.bakdata.common_kafka_streams.KafkaStreamsApplication;
 import com.bakdata.kafka.ErrorCapturingValueMapper;

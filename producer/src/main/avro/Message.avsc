@@ -1,0 +1,11 @@
+{
+  "namespace": "com.bakdata.kafka",
+  "name": "Message",
+  "type": "record",
+  "fields": [
+    {
+      "name": "content",
+      "type": "string"
+    }
+  ]
+}
