@@ -1,4 +1,4 @@
-"# rebalancing-demo" 
+## Kafka Rebalancing Demo 
 
 Create clean Kubernetes Cluster (for example with docker-desktop)
 
