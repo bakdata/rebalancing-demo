@@ -14,16 +14,16 @@ If `helm init` fails and cannot find the requested resource/tiller please try th
 helm init --service-account tiller --output yaml | sed 's@apiVersion: extensions/v1beta1@apiVersion: apps/v1@' | sed 's@  replicas: 1@  replicas: 1\n  selector: {"matchLabels": {"app": "helm", "name": "tiller"}}@' | kubectl apply -f -
 ```
 
-### Install kafka via [confluent helm charts](https://github.com/confluentinc/cp-helm-charts)
+### Install Kafka via [confluent helm charts](https://github.com/confluentinc/cp-helm-charts)
 
 ```
 helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
 helm repo update
-helm install confluentinc/cp-helm-charts --name demo --version 0.4.1
+helm install confluentinc/cp-helm-charts --name demo
 ```
 
-This will create a small kafka cluster of 3 brokers and other necessary applications like zookeeper or the schema registry.
-This may take a few minutes. Also do not worry of some applications are crashing and restarting at the beginning - that is normal.
+This will create a small Kafka cluster of 3 brokers and other necessary applications like ZooKeeper or the schema registry.
+This may take a few minutes. Also do not worry if some applications are crashing and restarting at the beginning - The pods are waiting for each other (e.g. brokers are waiting for a running ZooKeeper instance; schema registry is waiting for the brokers).
 
 ### Install our bakdata helm charts
 
@@ -33,7 +33,7 @@ helm repo add bakdata-common https://raw.githubusercontent.com/bakdata/common-ka
 
 ### Create topics
 
-We you [k9s]() to access the shell of a broker (and more) but you can also connect to the broker via command line:
+We use [k9s](https://github.com/derailed/k9s) to access the shell of a broker (and more) but you can also connect to the broker via command line:
 ```
 kubectl exec -it demo-cp-kafka-0 -c cp-kafka-broker -- bash
 ```
@@ -41,14 +41,14 @@ kubectl exec -it demo-cp-kafka-0 -c cp-kafka-broker -- bash
 In the shell you can create or delete topics.  
 Create:
 ```
-kafka-topics --zookeeper demo-cp-zookeeper:2181 --create --topic input-topic --partitions 3 --replication-factor 1
-kafka-topics --zookeeper demo-cp-zookeeper:2181 --create --topic error-topic --partitions 3 --replication-factor 1
+kafka-topics --bootstrap-server localhost:9092 --create --topic input-topic --partitions 3 --replication-factor 1
+kafka-topics --bootstrap-server localhost:9092 --create --topic output-topic --partitions 3 --replication-factor 1
 ```
 
 Delete:
 ```
-kafka-topics --zookeeper demo-cp-zookeeper:2181 --delete --topic input-topic
-kafka-topics --zookeeper demo-cp-zookeeper:2181 --delete --topic error-topic
+kafka-topics --bootstrap-server localhost:9092 --delete --topic input-topic
+kafka-topics --bootstrap-server localhost:9092 --delete --topic output-topic
 ```
 
 ### Deploying the Application
@@ -78,7 +78,7 @@ You can always delete the release via `helm delete demo-consumer`.
 
 ### Testing the application
 
-This is nice but does basically nothing because we do not send any data to the stream. So back to our shell connected to the kafka broker.  
+This is nice but does basically nothing because we do not send any data to the stream. So back to our shell connected to the Kafka broker.  
 Kafka added an application called `console-producer` that can send data to a topic. This is exactly the apllication we need:
 
 ```

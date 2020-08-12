@@ -1,12 +1,13 @@
 package com.bakdata.kafka.rebalancingdemo;
 
 import com.bakdata.common_kafka_streams.KafkaStreamsApplication;
+import java.time.Duration;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.serialization.Serdes.StringSerde;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
@@ -15,21 +16,21 @@ import org.apache.kafka.streams.kstream.KStream;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class SimpleTextConsumer extends KafkaStreamsApplication {
-    private static final long WAIT_MS = TimeUnit.MILLISECONDS.convert(15, TimeUnit.MINUTES);
+    private static final long WAIT_MS = Duration.ofMinutes(15).toMillis();
 
     public static void main(final String[] args) {
         KafkaStreamsApplication.startApplication(new SimpleTextConsumer(), args);
     }
 
     static String parse(final String input) {
-        if (input.equalsIgnoreCase("wait")) {
+        if ("wait".equalsIgnoreCase(input)) {
             log.info("Block Consumer for " + WAIT_MS + " ms");
             try {
                 Thread.sleep(WAIT_MS);
             } catch (InterruptedException e) {
                 log.error("Could no wait for " + WAIT_MS + " ms", e);
             }
-        } else if (input.equalsIgnoreCase("crash")) {
+        } else if ("crash".equalsIgnoreCase(input)) {
             throw new RuntimeException("Application Crashed. Do not know why :(");
         }
         log.info("Forward message: " + input);
@@ -48,8 +49,8 @@ public final class SimpleTextConsumer extends KafkaStreamsApplication {
     @Override
     public Properties createKafkaProperties() {
         final Properties kafkaProperties = super.createKafkaProperties();
-        kafkaProperties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        kafkaProperties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        kafkaProperties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, StringSerde.class.getName());
+        kafkaProperties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StringSerde.class.getName());
         return kafkaProperties;
     }
 
