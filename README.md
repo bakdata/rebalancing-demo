@@ -114,7 +114,7 @@ Test:
  * Write `crash` into the `kafka-console-producer`. If no pod restarts please wait a few seconds. It could be that the `crash` messages was sended to the blocked consumer.
  * Spam some random messages to the `kafka-console-producer`.
  
-At this point, no messages should arrive at the output because the consumer group is stuck on a rebalance until the blocked consumer finishes processing the `block` message.
+At this point, no messages should arrive at the output because the consumer group is stuck on a rebalance until the blocked consumer finishes processing the `wait` message.
 
 #### Static Membership Test
 
