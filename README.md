@@ -110,8 +110,8 @@ Perquisites:
  
 Test:
  * Write `wait` into the `kafka-console-producer`. The message blocks one consumer for 15 minutes.
- * Spam some random messages to the `kafka-console-producer`. You should see that some of them do not arrive in the output topic because they are stuck in the blocked consumer.
- * Write `crash` into the `kafka-console-producer`. If no pod restarts please wait a few seconds. It could be that the `crash` messages was sended to the blocked consumer.
+ * Spam some random messages to the `kafka-console-producer`. You should see, that some of them do not arrive in the output topic because they are stuck in the blocked consumer.
+ * Write `crash` into the `kafka-console-producer`. If no pod restarts please wait a few seconds. It could be that the `crash` message was sent to the blocked consumer.
  * Spam some random messages to the `kafka-console-producer`.
  
 At this point, no messages should arrive at the output because the consumer group is stuck on a rebalance until the blocked consumer finishes processing the `wait` message.
@@ -122,15 +122,15 @@ Perquisites:
  * Delete old helm deployment
  * Delete topics: `input-topic` and `output-topic`
  * Create topics: `input-topic` and `output-topic`
- * Start non-static deployment
+ * Start static deployment
  * Start `kafka-console-producer` and `kafka-console-consumer`
  * Write random strings into the `kafka-console-producer` and see if the messages arrive at the `kafka-console-consumer`. (This may take a minute now - After this minute al messages will arrive immediately)
  
 Test:
  * Write `wait` into the `kafka-console-producer`. One consumer is now blocked for 15 minutes.
  * Spam some random messages to the `kafka-console-producer`. You should see that some of them do not arrive in the output topic because they are stuck in the blocked consumer.
- * Write `crash` into the `kafka-console-producer`. If no pod restarts please wait a few seconds. It could be that the `crash` messages was sended to the blocked consumer.
+ * Write `crash` into the `kafka-console-producer`. If no pod restarts please wait a few seconds. It could be that the `crash` message was sent to the blocked consumer.
  * Spam some random messages to the `kafka-console-producer`.
  
 Since the consumer group is not rebalancing, the crashing consumer reads the `crash` message again and again and restarts multiple times. 
-At this point, roughly a third of all messages should arrive in the output topic. One third arrives at the blocked consumer, and the other third arrive at the crash-looping consumer.
+At this point, roughly a third of all messages should arrive in the output topic. One third arrives at the blocked consumer, and the other third arrives at the crash-looping consumer.
