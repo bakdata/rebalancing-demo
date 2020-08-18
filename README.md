@@ -2,7 +2,7 @@
 
 Create clean Kubernetes Cluster (for example with docker-desktop)
 
-### Install [helm](https://helm.sh/docs/intro/install/) - tooling for deploying to kubernetes 
+### Install [helm](https://helm.sh/docs/intro/install/) - tooling for deploying to Kubernetes 
 
 Afterward, install tiller:
 ```
@@ -71,7 +71,7 @@ docker tag demo-consumer:latest localhost:5000/demo-consumer
 docker push localhost:5000/demo-consumer
 ```
 
-Now you can finally deploy the application to our local kubernetes cluster using the `bakdata-common/streams-app` helm chart:
+Now you can finally deploy the application to our local Kubernetes cluster using the `bakdata-common/streams-app` helm chart:
 ```
 helm upgrade --debug --install --recreate-pods --wait --timeout=300 --force --values consumer/values.yaml demo-consumer bakdata-common/streams-app
 ```
@@ -106,7 +106,7 @@ Perquisites:
  * Create topics: `input-topic` and `output-topic`
  * Start non-static deployment
  * Start `kafka-console-producer` and `kafka-console-consumer`
- * Write random strings into the `kafka-console-producer` and see if the messages arrive at the `kafka-console-consumer`. (You will also see them in the logs of the kubernetes pods)
+ * Write random strings into the `kafka-console-producer` and see if the messages arrive at the `kafka-console-consumer`. (You will also see them in the logs of the Kubernetes pods)
  
 Test:
  * Write `wait` into the `kafka-console-producer`. The message blocks one consumer for 15 minutes.
