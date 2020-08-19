@@ -70,9 +70,9 @@ Now you can finally deploy the application to our local Kubernetes cluster using
 ```
 helm upgrade --debug --install --recreate-pods --wait --timeout=300 --force --values consumer/values.yaml demo-consumer bakdata-common/streams-app
 ```
-For the test with `static membership` use:
+To deploy the test with `static membership` we only have to add two values:
 ```
-helm upgrade --debug --install --recreate-pods --wait --timeout=300 --force --values consumer/values-static.yaml demo-consumer bakdata-common/streams-app
+helm upgrade --debug --install --recreate-pods --wait --timeout=300 --force --values consumer/values.yaml --set streams.staticMembership=true,streams.config."session\.timeout\.ms"=60000 demo-consumer bakdata-common/streams-app
 ```
 You can always delete the release via `helm delete demo-consumer`.
 
