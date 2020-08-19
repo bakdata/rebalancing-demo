@@ -22,11 +22,6 @@ helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
 helm repo update
 helm install confluentinc/cp-helm-charts --name demo
 ```
-Sadly these charts are not always up to date from our experience, and we can install them locally.
-```
-git clone https://github.com/confluentinc/cp-helm-charts.git
-```
-
 
 This will create a small Kafka cluster of 3 brokers and other necessary applications like ZooKeeper or the schema registry.
 This may take a few minutes. Also do not worry if some applications are crashing and restarting at the beginning - The pods are waiting for each other (e.g. brokers are waiting for a running ZooKeeper instance; schema registry is waiting for the brokers).
