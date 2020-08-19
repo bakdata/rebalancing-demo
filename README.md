@@ -70,7 +70,7 @@ Now you can finally deploy the application to our local Kubernetes cluster using
 ```
 helm upgrade --debug --install --recreate-pods --wait --timeout=300 --force --values consumer/values.yaml demo-consumer bakdata-common/streams-app
 ```
-For the test with the `static membership` use:
+For the test with `static membership` use:
 ```
 helm upgrade --debug --install --recreate-pods --wait --timeout=300 --force --values consumer/values-static.yaml demo-consumer bakdata-common/streams-app
 ```
