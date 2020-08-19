@@ -93,7 +93,7 @@ kafka-console-consumer --topic output-topic --bootstrap-server localhost:9092
 
 Now you can write simple text messages to the consumers. There are two special messages:
  * crash - crashes the consumer and the pod restarts
- * block - blocks the consumer for 15 minutes
+ * wait - blocks the consumer for 15 minutes
 
 #### Normal Test
 
@@ -109,7 +109,7 @@ Test:
  * Write `crash` into the `kafka-console-producer`. If no pod restarts please wait a few seconds. It could be that the `crash` message was sent to the blocked consumer.
  * Spam some random messages to the `kafka-console-producer`.
  
-At this point, no messages should arrive at the output because the consumer group is stuck on a rebalance until the blocked consumer finishes processing the `wait` message.
+At this point, no messages should arrive at the output because the consumer group is stuck in a rebalance until the blocked consumer finishes processing the `wait` message.
 
 #### Static Membership Test
 

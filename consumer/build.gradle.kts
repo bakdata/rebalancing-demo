@@ -1,9 +1,8 @@
 plugins {
-    idea
     java
     id("io.freefair.lombok") version "5.1.0"
     id("com.google.cloud.tools.jib") version "1.2.0"
-    id("com.commercehub.gradle.plugin.avro") version "0.9.1"
+    id("com.commercehub.gradle.plugin.avro") version "0.17.0"
 }
 group = "com.bakdata.kafka"
 
@@ -21,7 +20,7 @@ dependencies {
     val confluentVersion: String by project
     implementation(group = "io.confluent", name = "kafka-streams-avro-serde", version = confluentVersion)
     implementation(group = "info.picocli", name = "picocli", version = "4.0.4")
-    implementation(group = "com.bakdata.common-kafka-streams", name = "common-kafka-streams", version = "1.4.3")
+    implementation(group = "com.bakdata.common-kafka-streams", name = "common-kafka-streams", version = "1.4.4")
     implementation(group = "com.bakdata.kafka", name = "error-handling", version = "1.0.0")
 
     val kafkaVersion: String by project
