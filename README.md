@@ -97,7 +97,7 @@ Now you can write simple text messages to the consumers. There are two special m
 
 #### Normal Test
 
-Perquisites:
+Setup:
  * Create topics: `input-topic` and `output-topic`
  * Start non-static deployment
  * Start `kafka-console-producer` and `kafka-console-consumer`
@@ -113,7 +113,7 @@ At this point, no messages should arrive at the output because the consumer grou
 
 #### Static Membership Test
 
-Perquisites:
+Setup:
  * Delete old helm deployment
  * Delete topics: `input-topic` and `output-topic`
  * Create topics: `input-topic` and `output-topic`
